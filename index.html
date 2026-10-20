@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CreatorsHub Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+:root{
+  --bg:#F4F2F8; --surface:#FFFFFF; --ink:#2A2836; --muted:#8C8A9A; --line:#ECEAF2;
+  --lav:#E9E4FB; --lav-ink:#6B5BD2; --mint:#DDF4E7; --mint-ink:#2F8F5B;
+  --peach:#FFE6DA; --peach-ink:#C2643A; --sky:#DDEFFC; --sky-ink:#2C7BB8;
+  --butter:#FFF3CF; --butter-ink:#A47A10; --rose:#FBE3EC; --rose-ink:#B8466F;
+  --teal:#D3F1EC; --teal-ink:#1C8378; --teal-soft:#E8F8F5;
+  --accent:#7C6CE0; --r-lg:22px; --r-md:16px; --r-sm:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+input,textarea{font:inherit;color:inherit}
+
+/* ── top switcher ─────────────────────────────────────── */
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 28px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px}
+.logo{width:30px;height:30px;border-radius:10px;background:linear-gradient(135deg,#C9BFFB,#FFD3C2);display:grid;place-items:center;font-size:15px}
+.switch{display:flex;background:var(--surface);padding:5px;border-radius:999px;box-shadow:0 1px 2px rgba(40,30,80,.06)}
+.switch button{padding:9px 18px;border-radius:999px;font-weight:500;font-size:14px;color:var(--muted);transition:.2s}
+.switch button.on{background:var(--lav);color:var(--lav-ink)}
+.hint{font-size:13px;color:var(--muted)}
+.stage{display:none;justify-content:center;padding:4px 16px 40px}
+.stage.on{display:flex}
+
+/* ── iPhone 15 frame ──────────────────────────────────── */
+.phone-wrap{position:relative}
+.phone-wrap .phone{transform-origin:top left}
+.phone{width:393px;height:852px;border-radius:56px;background:#1d1d22;padding:11px;box-shadow:0 30px 60px -20px rgba(60,40,120,.35),0 0 0 2px #3a3a42 inset}
+.screen{position:relative;width:100%;height:100%;border-radius:46px;overflow:hidden;background:#0B0B0D;display:flex;flex-direction:column}
+.island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:122px;height:35px;background:#000;border-radius:20px;z-index:30}
+.status{height:54px;display:flex;align-items:center;justify-content:space-between;padding:4px 30px 0 44px;font-family:-apple-system,"SF Pro Text",Inter,sans-serif;font-weight:600;font-size:16px;letter-spacing:-.2px;color:#fff;flex-shrink:0}
+.status .ic{display:flex;gap:6px;align-items:center}
+.peek{height:9px;margin:0 20px;background:#222226;border-radius:12px 12px 0 0;flex-shrink:0}
+.tg-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 12px 16px;background:var(--lav);border-radius:14px 14px 0 0;flex-shrink:0}
+.tg-head .x{color:var(--ink);font-size:16px;width:80px;white-space:nowrap}
+.tg-head .t{text-align:center;line-height:1.15}
+.tg-head .t b{font-size:15px;display:block}
+.tg-head .t span{font-size:12px;color:#7D7891}
+.tg-head .dots{width:80px;display:flex;justify-content:flex-end}
+.tg-head .dots i{width:26px;height:26px;border:1.6px solid var(--ink);border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:13px;font-weight:700;letter-spacing:1px;line-height:1;padding-bottom:6px}
+.app-body{flex:1;overflow-y:auto;background:var(--bg);padding:16px 16px 100px;scrollbar-width:none}
+.app-body::-webkit-scrollbar{display:none}
+.tabbar{position:absolute;left:0;right:0;bottom:0;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 6px 26px;z-index:10}
+.tabbar button{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:var(--muted);font-weight:500;padding:4px 14px;border-radius:14px}
+.tabbar button .i{font-size:20px;filter:grayscale(1);opacity:.6}
+.tabbar button.on{color:var(--lav-ink)}
+.tabbar button.on .i{filter:none;opacity:1}
+.home-ind{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:#1d1d22;z-index:40}
+
+/* ── shared components ───────────────────────────────── */
+.hello{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.ava{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#FFD9C8,#D9CFFF);display:grid;place-items:center;font-weight:600}
+.hello h2{font-size:19px;font-weight:700}
+.hello p{font-size:13px;color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.kpi{background:var(--surface);border-radius:var(--r-md);padding:12px}
+.kpi b{display:block;font-size:18px;font-weight:700}
+.kpi span{font-size:11px;color:var(--muted)}
+.cta{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:#fff;border-radius:var(--r-md);padding:14px;font-weight:600;font-size:15px;box-shadow:0 8px 20px -10px rgba(124,108,224,.8);transition:transform .15s}
+.cta:active{transform:scale(.98)}
+.cta.ghost{background:var(--lav);color:var(--lav-ink);box-shadow:none}
+.seg{display:flex;background:#EAE7F2;padding:4px;border-radius:14px;margin:18px 0 14px}
+.seg button{flex:1;padding:8px 4px;border-radius:11px;font-size:13px;font-weight:500;color:var(--muted);display:flex;justify-content:center;gap:5px;align-items:center;transition:.2s}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(40,30,80,.08)}
+.cnt{font-size:11px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;display:inline-grid;place-items:center;background:var(--line);color:var(--muted)}
+.seg button.on .cnt{background:var(--lav);color:var(--lav-ink)}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.sec-h h3{font-size:16px;font-weight:600}
+.sec-h span{font-size:12px;color:var(--muted)}
+
+.vcard{background:var(--surface);border-radius:var(--r-lg);padding:10px;display:flex;gap:12px;margin-bottom:10px;align-items:stretch;transition:transform .15s,box-shadow .2s}
+.vcard.click{cursor:pointer}
+.vcard.click:hover{box-shadow:0 6px 18px -10px rgba(60,40,120,.3)}
+.vcard.click:active{transform:scale(.99)}
+.thumb{width:78px;aspect-ratio:9/16;border-radius:14px;position:relative;flex-shrink:0;overflow:hidden;display:grid;place-items:center}
+.thumb.photo{background-size:cover;background-position:center 35%;background-color:var(--line)}
+.thumb .play{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.75);display:grid;place-items:center;font-size:11px;padding-left:2px}
+.thumb .dur{position:absolute;bottom:6px;right:6px;font-size:10px;font-weight:600;background:rgba(0,0,0,.35);color:#fff;padding:2px 6px;border-radius:6px}
+.thumb .emo{position:absolute;top:8px;left:8px;font-size:16px}
+.vinfo{flex:1;display:flex;flex-direction:column;min-width:0;padding:2px 2px 2px 0}
+.vinfo h4{font-size:14px;font-weight:600;line-height:1.3;margin-bottom:4px}
+.meta{font-size:12px;color:var(--muted);display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.ok-txt{color:var(--mint-ink);font-size:13px;font-weight:600;white-space:nowrap}
+.pill{white-space:nowrap;display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:4px 9px;border-radius:999px}
+.p-lav{background:var(--lav);color:var(--lav-ink)} .p-mint{background:var(--mint);color:var(--mint-ink)}
+.p-peach{background:var(--peach);color:var(--peach-ink)} .p-sky{background:var(--sky);color:var(--sky-ink)}
+.p-butter{background:var(--butter);color:var(--butter-ink)} .p-teal{background:var(--teal);color:var(--teal-ink)} .p-rose{background:var(--rose);color:var(--rose-ink)}
+.vfoot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:8px}
+.mini-btn{background:var(--lav);color:var(--lav-ink);font-weight:600;font-size:13px;padding:8px 12px;border-radius:12px;white-space:nowrap}
+.mini-btn.solid{background:var(--accent);color:#fff}
+.note{background:var(--peach);color:#7a4428;font-size:12px;border-radius:12px;padding:8px 10px;margin-top:8px;line-height:1.35}
+.stats-row{display:flex;gap:12px;font-size:12px;color:var(--muted)}
+.stats-row b{color:var(--ink);font-weight:600}
+.plats{display:flex;gap:4px}
+.pl{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-size:9px;font-weight:700}
+.pl-yt{background:var(--rose);color:var(--rose-ink)} .pl-vk{background:var(--sky);color:var(--sky-ink)}
+.pl-ig{background:var(--peach);color:var(--peach-ink)} .pl-tt{background:var(--mint);color:var(--mint-ink)}
+.empty{text-align:center;color:var(--muted);font-size:13px;padding:30px 10px}
+
+/* detail */
+.back{display:inline-flex;align-items:center;gap:6px;color:var(--lav-ink);font-weight:500;font-size:14px;margin-bottom:12px}
+.hero{display:flex;gap:14px;align-items:center;margin-bottom:16px}
+.hero .thumb{width:92px}
+.hero h2{font-size:18px;line-height:1.25;margin-bottom:6px}
+.big{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.big .kpi b{font-size:20px}
+.card{background:var(--surface);border-radius:var(--r-lg);padding:16px;margin-bottom:12px}
+.card h3{font-size:14px;font-weight:600;margin-bottom:12px;display:flex;justify-content:space-between}
+.card h3 span{color:var(--muted);font-weight:400;font-size:12px}
+.prow{display:grid;grid-template-columns:26px 1fr auto;gap:10px;align-items:center;margin-bottom:12px}
+.prow:last-child{margin-bottom:0}
+.prow .lbl{font-size:13px;font-weight:500;display:flex;justify-content:space-between;margin-bottom:5px}
+.prow .lbl span{color:var(--muted);font-weight:400;font-size:12px}
+.bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:4px}
+.prow .open{font-size:16px;color:var(--muted)}
+.spark{width:100%;height:80px}
+
+/* sheet / modal */
+.overlay{position:absolute;inset:0;background:rgba(30,25,50,.28);z-index:50;opacity:0;pointer-events:none;transition:opacity .25s}
+.overlay.on{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--surface);border-radius:28px 28px 0 0;padding:10px 18px 34px;transform:translateY(100%);transition:transform .3s cubic-bezier(.2,.8,.2,1);max-height:88%;overflow-y:auto;z-index:51}
+.overlay.on .sheet{transform:none}
+.grab{width:38px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 14px}
+.sheet h3{font-size:18px;font-weight:700;margin-bottom:4px}
+.sheet .sub{font-size:13px;color:var(--muted);margin-bottom:16px}
+.sheet-vid{display:flex;gap:10px;align-items:center;background:var(--bg);border-radius:var(--r-md);padding:8px;margin-bottom:16px}
+.sheet-vid .thumb{width:40px;border-radius:9px}
+.sheet-vid .thumb.photo{background-size:cover;background-position:center 35%;background-color:var(--line)}
+.thumb .play{display:none}
+.sheet-vid b{font-size:13px;display:block}
+.sheet-vid span{font-size:12px;color:var(--muted)}
+.field{display:flex;align-items:center;gap:10px;background:var(--bg);border-radius:14px;padding:6px 6px 6px 8px;margin-bottom:8px;border:1.5px solid transparent;transition:.2s}
+.field:focus-within{border-color:#CFC6FA;background:#fff}
+.field.ok{background:var(--mint)}
+.field input{flex:1;border:0;background:none;outline:none;font-size:14px;min-width:0;padding:8px 0}
+.field .paste{font-size:12px;font-weight:600;color:var(--lav-ink);background:#fff;padding:7px 10px;border-radius:10px}
+.lbl-s{font-size:12px;font-weight:600;color:var(--muted);margin:14px 0 8px;text-transform:uppercase;letter-spacing:.04em}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:9px 13px;border-radius:12px;background:var(--bg);font-size:13px;font-weight:500;transition:.15s;border:1.5px solid transparent}
+.chip.on{background:var(--lav);color:var(--lav-ink);border-color:#CFC6FA}
+.drop{border:2px dashed #D8D2EE;border-radius:var(--r-md);padding:20px;text-align:center;color:var(--muted);font-size:13px;cursor:pointer;transition:.2s}
+.drop .big-i{font-size:26px;display:block;margin-bottom:6px}
+.drop.done{border-style:solid;border-color:#BFE6CF;background:var(--mint);color:var(--mint-ink)}
+textarea.ta{width:100%;border:0;background:var(--bg);border-radius:14px;padding:12px;font-size:14px;resize:none;outline:none;min-height:70px}
+.err{color:var(--rose-ink);font-size:12px;margin:8px 0 0;min-height:16px}
+.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+.toast{position:absolute;left:50%;top:110px;transform:translate(-50%,-20px);background:var(--ink);color:#fff;font-size:13px;font-weight:500;padding:11px 16px;border-radius:14px;opacity:0;transition:.3s;z-index:60;white-space:nowrap;pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+.list-item{display:flex;align-items:center;gap:12px;background:var(--surface);border-radius:var(--r-md);padding:14px;margin-bottom:8px}
+.list-item .ico{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:18px;flex-shrink:0}
+.list-item b{font-size:14px;display:block}
+.list-item span{font-size:12px;color:var(--muted)}
+.list-item .chev{margin-left:auto;color:var(--muted)}
+.bubble{max-width:80%;padding:10px 13px;border-radius:18px;font-size:14px;line-height:1.4;margin-bottom:8px}
+.bubble.in{background:var(--surface);border-bottom-left-radius:6px}
+.bubble.out{background:var(--lav);margin-left:auto;border-bottom-right-radius:6px}
+.bubble small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+
+/* ── website ──────────────────────────────────────────── */
+.browser{width:min(1240px,100%);background:var(--surface);border-radius:20px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(60,40,120,.35);position:relative}
+.chrome{display:flex;align-items:center;gap:14px;padding:12px 16px;background:#F0EEF5;border-bottom:1px solid var(--line)}
+.lights{display:flex;gap:7px}
+.lights i{width:12px;height:12px;border-radius:50%;background:#F4B9B2}
+.lights i:nth-child(2){background:#F6DDA0}.lights i:nth-child(3){background:#BFE3C5}
+.url{flex:1;max-width:460px;margin:0 auto;background:#fff;border-radius:10px;padding:6px 12px;font-size:12px;color:var(--muted);text-align:center}
+.site{display:grid;grid-template-columns:230px 1fr;min-height:720px;background:var(--bg)}
+.side{background:var(--surface);padding:22px 14px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:4px}
+.side .brand{padding:0 10px 18px}
+.nav{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:12px;font-size:14px;font-weight:500;color:var(--muted);text-align:left;width:100%}
+.nav.on{background:var(--lav);color:var(--lav-ink)}
+.nav .badge{margin-left:auto}
+.side .me{margin-top:auto;display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px;border-radius:14px;background:var(--bg)}
+.side .me .ava{width:36px;height:36px;font-size:13px}
+.side .me b{font-size:13px;display:block}.side .me span{font-size:11px;color:var(--muted)}
+.main{padding:28px 32px;overflow:hidden}
+.main-h{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px;gap:16px}
+.main-h h1{font-size:26px;font-weight:700;margin-bottom:4px}
+.main-h p{color:var(--muted);font-size:14px}
+.main-h .cta{width:auto;padding:12px 18px}
+.wkpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.wkpi{background:var(--surface);border-radius:var(--r-lg);padding:18px;display:flex;gap:14px;align-items:center}
+.wkpi .ico{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font-size:19px}
+.wkpi b{font-size:22px;font-weight:700;display:block}
+.wkpi span{font-size:12px;color:var(--muted)}
+.wseg{display:inline-flex;margin:0 0 18px}
+.wseg{max-width:100%;overflow-x:auto}
+.wseg button{padding:9px 18px;white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.gcard{min-width:0;background:var(--surface);border-radius:var(--r-lg);padding:10px;display:flex;flex-direction:column;transition:transform .15s,box-shadow .2s}
+.gcard.click{cursor:pointer}
+.gcard.click:hover{transform:translateY(-2px);box-shadow:0 12px 24px -14px rgba(60,40,120,.35)}
+.gcard .thumb{width:100%;aspect-ratio:4/5;border-radius:16px;margin-bottom:10px}
+.gcard .thumb.photo{background-size:cover;background-position:center 35%;background-color:var(--line)}
+.thumb .play{width:42px;height:42px;font-size:14px}
+.gcard h4{font-size:14px;font-weight:600;margin:0 4px 6px;line-height:1.3}
+.gcard .meta{margin:0 4px 10px}
+.gcard .vfoot{padding:0 4px 4px;margin-top:auto;flex-wrap:wrap;row-gap:10px}
+.gcard .note{margin:0 4px 8px}
+.gcard .mini-btn{flex:1 1 100%;text-align:center;padding:10px}
+.web .overlay{position:fixed;display:grid;place-items:center}
+.web .sheet{position:relative;width:min(480px,92%);border-radius:24px;transform:translateY(20px) scale(.98);padding:24px;max-height:90%;left:auto;right:auto;bottom:auto}
+.web .grab{display:none}
+.web .toast{position:fixed;top:80px}
+.modal-x{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:10px;background:var(--bg);color:var(--muted);font-size:16px}
+.mobile .modal-x{display:none}
+.wdetail{width:min(760px,94%)!important;background:var(--bg)!important}
+.wdetail .modal-x{background:#fff}
+.wdetail .cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:820px){
+  .site{grid-template-columns:1fr}
+  .side{display:none}
+  .main .web-ref{display:block}
+  .wkpis{grid-template-columns:repeat(2,1fr)}
+  .main{padding:20px 16px}
+  .main-h{flex-direction:column}
+  .wdetail .cols{grid-template-columns:1fr}
+}
+/* referral */
+.ref-pill{margin-top:8px;display:inline-flex;gap:6px;align-items:center;background:var(--teal);color:var(--teal-ink);font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px;transition:transform .15s}
+.ref-pill b{font-weight:700}
+.ref-pill:active{transform:scale(.97)}
+.side .me .ref-pill{width:100%;justify-content:center;margin-top:0;padding:8px 10px}
+.ref-hero{background:linear-gradient(135deg,var(--teal),var(--teal-soft));border-radius:var(--r-lg);padding:18px;position:relative;margin-bottom:4px}
+.ref-hero span{font-size:12px;color:var(--teal-ink);font-weight:600}
+.ref-hero b{display:block;font-size:30px;font-weight:700;margin:4px 0;font-variant-numeric:tabular-nums}
+.ref-hero small{font-size:12px;color:#4A7A74}
+.ref-out{position:absolute;right:16px;top:18px;background:var(--teal-ink);color:#fff;font-weight:600;font-size:13px;padding:9px 14px;border-radius:12px}
+.promo{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--surface);border-radius:var(--r-md);padding:12px 12px 12px 14px;margin-bottom:8px}
+.promo b{font-size:15px;letter-spacing:.05em;font-family:ui-monospace,Menlo,monospace;display:block;margin-bottom:2px}
+.promo .d{font-size:12px;color:var(--muted)}
+.promo-r{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
+.copy-btn{font-size:12px;font-weight:600;color:var(--teal-ink);background:var(--teal-soft);padding:6px 10px;border-radius:10px}
+.tx{padding:6px 14px}
+.tx-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+.tx-row:last-child{border-bottom:0}
+.tx-ic{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;font-size:15px;flex-shrink:0}
+.tx-row b{font-size:13px;display:block;font-weight:600}
+.tx-row span{font-size:12px;color:var(--muted)}
+.tx-amt{margin-left:auto;font-weight:700;font-size:14px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tx-amt.in{color:var(--teal-ink)}
+.web-ref{display:none}
+.ref-title{font-size:20px;font-weight:700;margin-bottom:14px}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><div class="logo">✦</div>CreatorsHub · концепт</div>
+  <div class="switch">
+    <button class="on" data-view="mobile">📱 Мини-апп в Telegram</button>
+    <button data-view="web">🖥 Веб-сайт</button>
+  </div>
+  <div class="hint">Данные общие: добавь ссылки в одном — увидишь в другом</div>
+</div>
+
+<!-- ── Mini app ── -->
+<div class="stage on" id="stage-mobile">
+  <div class="phone-wrap" id="phoneWrap">
+    <div class="phone">
+      <div class="screen mobile" data-ctx="app" id="appRoot">
+        <div class="island"></div>
+        <div class="status"><span>9:41</span><span class="ic"><svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#fff"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#fff"/><rect x="10" y="3" width="3" height="9" rx="1" fill="#fff"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#fff" opacity=".35"/></svg><svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 2.3c2.3 0 4.4.9 6 2.4l1.2-1.2A10.2 10.2 0 0 0 8 .6 10.2 10.2 0 0 0 .8 3.5L2 4.7a8.6 8.6 0 0 1 6-2.4Zm0 3.3c1.4 0 2.7.5 3.7 1.4l1.2-1.2A7 7 0 0 0 8 4a7 7 0 0 0-4.9 1.8L4.3 7c1-.9 2.3-1.4 3.7-1.4Zm0 3.3c.6 0 1.1.2 1.5.6L8 11.1 6.5 9.5c.4-.4.9-.6 1.5-.6Z" fill="#fff"/></svg><svg width="28" height="13" viewBox="0 0 28 13"><rect x="0" y="0" width="24.5" height="13" rx="4" fill="#fff"/><path d="M26 4.5c.9.3 1.5 1.1 1.5 2s-.6 1.7-1.5 2Z" fill="#fff" opacity=".45"/><text x="12.25" y="10" text-anchor="middle" font-family="-apple-system,Inter,sans-serif" font-size="9.5" font-weight="700" fill="#000">82</text></svg></span></div>
+        <div class="peek"></div>
+        <div class="tg-head">
+          <span class="x">Закрыть</span>
+          <div class="t"><b>CreatorsHub</b><span>мини-приложение</span></div>
+          <span class="dots"><i>···</i></span>
+        </div>
+        <div class="app-body" id="appBody"></div>
+        <nav class="tabbar" id="appTabbar"></nav>
+        <div class="overlay" data-a="close"><div class="sheet" data-stop></div></div>
+        <div class="toast"></div>
+        <div class="home-ind"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Website ── -->
+<div class="stage" id="stage-web">
+  <div class="browser web" data-ctx="web" id="webRoot">
+    <div class="chrome">
+      <div class="lights"><i></i><i></i><i></i></div>
+      <div class="url">🔒 creatorshub.ru/videos</div>
+      <div style="width:50px"></div>
+    </div>
+    <div class="site">
+      <aside class="side" id="webSide"></aside>
+      <main class="main" id="webMain"></main>
+    </div>
+    <div class="overlay" data-a="close"><div class="sheet" data-stop></div></div>
+    <div class="toast"></div>
+  </div>
+</div>
+
+<script>
+// ── data ──────────────────────────────────────────────────
+const GR = [
+  'linear-gradient(160deg,#FBD6C6,#F7B8C8)', 'linear-gradient(160deg,#D6CCFB,#B9D7F7)',
+  'linear-gradient(160deg,#CDEFD9,#B8E2EE)', 'linear-gradient(160deg,#FFEBB5,#FBCFB9)',
+  'linear-gradient(160deg,#E8D4F7,#F9C9DC)', 'linear-gradient(160deg,#C6E6F9,#D4D0FB)',
+];
+const IMGS = {5:'img/5.jpg', 6:'img/6.jpg', 7:'img/7.jpg', 8:'img/8.jpg', 9:'img/9.jpg', 10:'img/10.jpg', 11:'img/11.jpg', 12:'img/12.jpg'};
+const PRODUCTS = ['Коллаген Complex','Магний B6 Premium','Липосомальное железо','Комплекс для зрения','Комплекс для волос','Липосомальный витамин C'];
+const PLATS = [
+  {k:'yt',name:'YouTube Shorts',short:'YT',color:'#E89AB4',sample:'youtube.com/shorts/x8Kd2'},
+  {k:'vk',name:'VK Клипы',short:'VK',color:'#8FC0E6',sample:'vk.com/clip-21490_45612'},
+  {k:'ig',name:'Instagram*',short:'IG',color:'#F2B394',sample:'instagram.com/reel/C9xQ'},
+  {k:'tt',name:'TikTok',short:'TT',color:'#9ED6B4',sample:'tiktok.com/@anna/video/731'},
+];
+let seq = 100;
+const videos = [
+  {id:1,title:'Почему зрение садится быстрее, чем у родителей',product:'Комплекс для зрения',mp:'Wildberries',status:'review',date:'17 окт',dur:'0:58',g:0,img:'5'},
+  {id:2,title:'Начинаю пить магний: будет ли побочка?',product:'Магний B6 Premium',mp:'Ozon',status:'changes',date:'15 окт',dur:'0:41',g:3,img:'7',
+   comment:'Покажи упаковку крупнее на 0:12 и добавь артикул в конце 🙏'},
+  {id:3,title:'Мои антиэйдж фишки: мне будет 40',product:'Коллаген Complex',mp:'Wildberries',status:'approved',date:'14 окт',dur:'0:47',g:1,img:'6'},
+  {id:4,title:'Wellness routine: версия утро',product:'Липосомальное железо',mp:'Ozon',status:'approved',date:'12 окт',dur:'1:04',g:2,img:'8'},
+  {id:5,title:'Магний B6 — стоп-стресс формула',product:'Магний B6 Premium',mp:'Wildberries',status:'approved',date:'11 окт',dur:'0:36',g:4,img:'9'},
+  {id:6,title:'Зачем я пью магний и какого эффекта жду',product:'Магний B6 Premium',mp:'Wildberries',status:'published',date:'2 окт',dur:'0:52',g:5,img:'10',
+   stats:{yt:[48200,3100,214],vk:[21900,1240,88],ig:[63400,5820,410],tt:[0,0,0]},trend:[4,9,16,25,31,36,40]},
+  {id:7,title:'Седина до 30 лет: откуда и что делать',product:'Комплекс для волос',mp:'Ozon',status:'published',date:'27 сен',dur:'1:12',g:3,img:'11',
+   stats:{yt:[12400,830,41],vk:[9800,610,35],ig:[0,0,0],tt:[30500,2900,187]},trend:[3,8,12,15,17,18,19]},
+  {id:8,title:'Липосомальный витамин C: не все знают, что это',product:'Липосомальный витамин C',mp:'Wildberries',status:'published',date:'19 сен',dur:'0:44',g:0,img:'12',
+   stats:{yt:[5200,390,22],vk:[0,0,0],ig:[18700,1420,96],tt:[0,0,0]},trend:[2,5,9,12,14,15,16]},
+];
+const ST = {
+  review:{t:'На проверке',cls:'p-butter'}, changes:{t:'Нужны правки',cls:'p-peach'},
+  approved:{t:'Одобрено',cls:'p-mint'}, published:{t:'Опубликовано',cls:'p-lav'},
+};
+const TABS = [
+  {k:'review',t:'На согласовании',short:'Проверка',match:v=>v.status==='review'||v.status==='changes'},
+  {k:'approved',t:'Одобренные',short:'Одобрены',match:v=>v.status==='approved'},
+  {k:'published',t:'Опубликованные',short:'В эфире',match:v=>v.status==='published'},
+];
+const state = {
+  app:{tab:'videos',vtab:'approved',detail:null},
+  web:{section:'videos',vtab:'approved'},
+};
+
+// ── helpers ───────────────────────────────────────────────
+const fmt = n => n>=1000 ? (n/1000).toFixed(n>=10000?0:1).replace('.',',')+'K' : String(n);
+const sum = (v,i) => Object.values(v.stats||{}).reduce((a,s)=>a+s[i],0);
+const livePlats = v => PLATS.filter(p => v.stats && v.links ? v.links[p.k] : (v.stats && v.stats[p.k][0]>0));
+const byTab = k => videos.filter(TABS.find(t=>t.k===k).match);
+const thumb = v => v.img
+  ? `<div class="thumb photo" style="background-image:url(${IMGS[v.img]})"><span class="dur">${v.dur}</span></div>`
+  : `<div class="thumb" style="background:${GR[v.g]}"><span class="emo">${v.emo||''}</span><div class="play">▶</div><span class="dur">${v.dur}</span></div>`;
+const platBadges = v => `<div class="plats">${livePlats(v).map(p=>`<span class="pl pl-${p.k}">${p.short}</span>`).join('')}</div>`;
+const totals = () => {
+  const pub = videos.filter(v=>v.status==='published');
+  return {views:pub.reduce((a,v)=>a+sum(v,0),0), likes:pub.reduce((a,v)=>a+sum(v,1),0), pub:pub.length,
+          review:byTab('review').length, approved:byTab('approved').length};
+};
+
+function cardBody(v){
+  const st = ST[v.status];
+  let foot = '';
+  if (v.status==='approved') foot = `<span class="ok-txt">Одобрено</span><button class="mini-btn solid" data-a="links" data-id="${v.id}">＋ Добавить ссылки</button>`;
+  else if (v.status==='published') foot = `<div class="stats-row"><span>👁 <b>${fmt(sum(v,0))}</b></span><span>♥ <b>${fmt(sum(v,1))}</b></span></div>${platBadges(v)}`;
+  else if (v.status==='changes') foot = `<span class="pill ${st.cls}">${st.t}</span><button class="mini-btn" data-a="toast" data-msg="Здесь откроется перезаливка ролика">Перезалить</button>`;
+  else foot = `<span class="pill ${st.cls}">⏳ ${st.t}</span><span class="meta">обычно до 24 ч</span>`;
+  return {foot, note: v.comment && v.status==='changes' ? `<div class="note">💬 <b>Менеджер:</b> ${v.comment}</div>` : ''};
+}
+
+// ── mini app render ───────────────────────────────────────
+function vcard(v){
+  const {foot,note} = cardBody(v);
+  const click = v.status==='published' ? `click" data-a="detail" data-id="${v.id}` : '';
+  return `<div class="vcard ${click}">${thumb(v)}<div class="vinfo">
+    <h4>${v.title}</h4><div class="meta">${v.product} · ${v.mp}</div>${note}
+    <div class="vfoot">${foot}</div></div></div>`;
+}
+
+function renderApp(){
+  const s = state.app, body = document.getElementById('appBody'), t = totals();
+  let html = '';
+  if (s.tab==='videos' && s.ref){
+    html = refHtml('app');
+  } else if (s.tab==='videos' && s.detail){
+    html = detailHtml(videos.find(v=>v.id===s.detail), 'app');
+  } else if (s.tab==='videos'){
+    html = `<div class="hello"><div class="ava">АК</div><div><h2>Привет, Аня 👋</h2><p>Октябрь · кампания «Осенний wellness»</p>${refPill()}</div></div>
+      <div class="kpis">
+        <div class="kpi"><b>${fmt(t.views)}</b><span>просмотров</span></div>
+        <div class="kpi"><b>${fmt(t.likes)}</b><span>лайков</span></div>
+        <div class="kpi"><b>${t.pub}</b><span>в эфире</span></div>
+      </div>
+      <button class="cta" data-a="upload">🎬 Отправить ролик на согласование</button>
+      <div class="seg">${TABS.map(tb=>`<button class="${s.vtab===tb.k?'on':''}" data-a="vtab" data-k="${tb.k}">${tb.short}<span class="cnt">${byTab(tb.k).length}</span></button>`).join('')}</div>
+      ${s.vtab==='approved' && t.approved ? `<div class="sec-h"><h3>Ждут ссылок</h3><span>${t.approved} ролика</span></div>` : ''}
+      ${byTab(s.vtab).map(vcard).join('') || `<div class="empty">Здесь пока пусто ✨</div>`}`;
+  } else if (s.tab==='materials'){
+    html = materialsHtml();
+  } else {
+    html = chatHtml();
+  }
+  body.innerHTML = html;
+  document.getElementById('appTabbar').innerHTML = [
+    ['videos','🎬','Ролики'],['materials','📚','Материалы'],['chat','💬','Менеджер']
+  ].map(([k,i,l])=>`<button class="${s.tab===k?'on':''}" data-a="tab" data-k="${k}"><span class="i">${i}</span>${l}</button>`).join('');
+}
+
+function materialsHtml(){
+  const items = [
+    ['🎯','var(--peach)','Актуальное на месяц','5 товаров в фокусе октября'],
+    ['📝','var(--lav)','Сценарии','12 готовых сценариев'],
+    ['📖','var(--sky)','Гайд для креатора','Требования к роликам и тегам'],
+    ['📷','var(--mint)','Фото товаров','Пакшоты для обложек'],
+  ];
+  return `<div class="sec-h"><h3 style="font-size:20px">Материалы</h3></div>
+    ${items.map(([i,c,b,s])=>`<div class="list-item" data-a="toast" data-msg="Откроется раздел «${b}»" style="cursor:pointer"><div class="ico" style="background:${c}">${i}</div><div><b>${b}</b><span>${s}</span></div><span class="chev">›</span></div>`).join('')}
+    <div class="lbl-s">В фокусе октября</div>
+    <div class="chips">${PRODUCTS.map(p=>`<span class="chip">${p}</span>`).join('')}</div>`;
+}
+function chatHtml(){
+  return `<div class="sec-h"><h3 style="font-size:20px">Менеджер</h3><span>обычно отвечает за час</span></div>
+    <div class="bubble in">Привет! Ролик про магний посмотрела — почти идеально, оставила комментарий 💛<small>Мария · 12:04</small></div>
+    <div class="bubble out">Спасибо! Перезалью сегодня вечером<small>12:10</small></div>
+    <div class="bubble in">Супер. И не забудь ссылки на 3 одобренных ролика 🙂<small>Мария · 12:11</small></div>
+    <div class="field" style="margin-top:14px;background:#fff"><input placeholder="Написать менеджеру…"><button class="paste" data-a="toast" data-msg="Сообщение отправлено">➤</button></div>`;
+}
+
+// ── detail (shared) ───────────────────────────────────────
+function detailHtml(v, ctx){
+  const max = Math.max(...PLATS.map(p=>v.stats[p.k][0]),1);
+  const tr = v.trend, mx = Math.max(...tr);
+  const pts = tr.map((y,i)=>`${(i/(tr.length-1))*300},${70-(y/mx)*60}`).join(' ');
+  const er = sum(v,0) ? ((sum(v,1)+sum(v,2))/sum(v,0)*100).toFixed(1).replace('.',',') : '0';
+  const rows = PLATS.map(p=>{
+    const [vw,lk,cm] = v.stats[p.k];
+    if (!vw) return `<div class="prow" style="opacity:.45"><span class="pl pl-${p.k}">${p.short}</span><div><div class="lbl">${p.name}<span>не опубликовано</span></div><div class="bar"></div></div><span></span></div>`;
+    return `<div class="prow"><span class="pl pl-${p.k}">${p.short}</span><div><div class="lbl">${p.name}<span>👁 ${fmt(vw)} · ♥ ${fmt(lk)} · 💬 ${cm}</span></div><div class="bar"><i style="width:${vw/max*100}%;background:${p.color}"></i></div></div><span class="open">↗</span></div>`;
+  }).join('');
+  const chart = `<div class="card"><h3>Просмотры за 7 дней <span>всего, тыс.</span></h3>
+    <svg class="spark" viewBox="0 0 300 80" preserveAspectRatio="none">
+      <defs><linearGradient id="sg${ctx}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#B9ADF5" stop-opacity=".55"/><stop offset="1" stop-color="#B9ADF5" stop-opacity="0"/></linearGradient></defs>
+      <polygon points="0,80 ${pts} 300,80" fill="url(#sg${ctx})"/>
+      <polyline points="${pts}" fill="none" stroke="#7C6CE0" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+    </svg></div>`;
+  const kp = `<div class="big">
+      <div class="kpi"><b>${fmt(sum(v,0))}</b><span>просмотров</span></div>
+      <div class="kpi"><b>${fmt(sum(v,1))}</b><span>лайков</span></div>
+      <div class="kpi"><b>${er}%</b><span>вовлечённость</span></div></div>`;
+  const hero = `<div class="hero">${thumb(v)}<div><h2>${v.title}</h2><div class="meta" style="margin-bottom:8px">${v.product} · ${v.mp}</div><span class="pill p-lav">Опубликовано ${v.date}</span></div></div>`;
+  const plat = `<div class="card"><h3>По площадкам <span>${v.fresh?'обновится через 6 ч':'обновлено 2 ч назад'}</span></h3>${rows}</div>`;
+  if (ctx==='app') return `<button class="back" data-a="back">‹ Назад</button>${hero}${kp}${chart}${plat}`;
+  return `${hero}${kp}<div class="cols">${chart}${plat}</div>`;
+}
+
+// ── referral ──────────────────────────────────────────────
+const PROMOS = [
+  {code:'ANNA10', desc:'−10% подписчикам на весь заказ', used:38},
+  {code:'ANNAMG', desc:'Магний B6 в подарок от 2 500 ₽', used:21},
+];
+const TX = [
+  {t:'Заказ по ANNA10', d:'Магний B6 Premium · 18 окт', a:420, ic:'🛍', c:'var(--teal-soft)'},
+  {t:'Заказ по ANNAMG', d:'Коллаген Complex ×2 · 16 окт', a:1180, ic:'🛍', c:'var(--teal-soft)'},
+  {t:'Бонус за 30 покупок', d:'Уровень «Амбассадор» · 14 окт', a:1500, ic:'🏆', c:'var(--butter)'},
+  {t:'Вывод на карту •• 4417', d:'Выплачено · 10 окт', a:-5000, ic:'↗', c:'var(--lav)'},
+  {t:'Заказ по ANNA10', d:'Липосомальный витамин C · 7 окт', a:640, ic:'🛍', c:'var(--teal-soft)'},
+];
+const rub = n => (n<0?'−':'+') + Math.abs(n).toLocaleString('ru-RU').replace(/,/g,' ') + ' ₽';
+const refPill = () => `<button class="ref-pill" data-a="ref">🎁 Реферальная программа · <b>7 240 ₽</b> ›</button>`;
+function refHtml(ctx){
+  const hero = `<div class="ref-hero"><span>Реферальный баланс</span><b>7 240 ₽</b><small>Начислено 12 240 ₽ · выведено 5 000 ₽</small>
+    <button class="ref-out" data-a="toast" data-msg="Заявка на вывод создана">Вывести</button></div>`;
+  const promos = `<div class="lbl-s">Мои промокоды</div>` + PROMOS.map(c=>`<div class="promo"><div><b>${c.code}</b><span class="d">${c.desc}</span></div>
+    <div class="promo-r"><span class="pill p-teal">${c.used} покупок</span><button class="copy-btn" data-a="toast" data-msg="Промокод ${c.code} скопирован">Копировать</button></div></div>`).join('');
+  const tx = `<div class="lbl-s">Операции</div><div class="card tx">` + TX.map(x=>`<div class="tx-row"><div class="tx-ic" style="background:${x.c}">${x.ic}</div>
+    <div><b>${x.t}</b><span>${x.d}</span></div><span class="tx-amt ${x.a>0?'in':''}">${rub(x.a)}</span></div>`).join('') + `</div>`;
+  if (ctx==='app') return `<button class="back" data-a="back">‹ Назад</button><h2 class="ref-title">Реферальная программа</h2>${hero}${promos}${tx}`;
+  return `<h2 class="ref-title">Реферальная программа</h2><div class="cols"><div>${hero}${promos}</div><div>${tx}</div></div>`;
+}
+
+// ── website render ────────────────────────────────────────
+function gcard(v){
+  const {foot,note} = cardBody(v);
+  const click = v.status==='published' ? `click" data-a="detail" data-id="${v.id}` : '';
+  return `<div class="gcard ${click}">${thumb(v)}<h4>${v.title}</h4><div class="meta">${v.product} · ${v.mp} · ${v.date}</div>${note}<div class="vfoot">${foot}</div></div>`;
+}
+function renderWeb(){
+  const s = state.web, t = totals();
+  document.getElementById('webSide').innerHTML = `<div class="brand"><div class="logo">✦</div>CreatorsHub</div>
+    ${[['videos','🎬','Мои ролики',t.approved],['month','🎯','Актуальное',0],['materials','📚','Материалы',0],['chat','💬','Менеджер',1],['profile','👤','Профиль и договор',0]]
+      .map(([k,i,l,b])=>`<button class="nav ${s.section===k?'on':''}" data-a="${k==='videos'?'nav':'toast'}" data-k="${k}" data-msg="Раздел «${l}» — в следующей итерации">${i} ${l}${b?`<span class="cnt badge">${b}</span>`:''}</button>`).join('')}
+    <div class="me"><div class="ava">АК</div><div><b>Анна Кравец</b><span>креатор · активна</span></div>${refPill()}</div>`;
+  document.getElementById('webMain').innerHTML = `
+    <div class="main-h"><div><h1>Мои ролики</h1><p>Кампания «Осенний wellness» · октябрь</p><div class="web-ref">${refPill()}</div></div>
+      <button class="cta" data-a="upload">🎬 Отправить ролик</button></div>
+    <div class="wkpis">
+      <div class="wkpi"><div class="ico" style="background:var(--lav)">👁</div><div><b>${fmt(t.views)}</b><span>просмотров всего</span></div></div>
+      <div class="wkpi"><div class="ico" style="background:var(--rose)">♥</div><div><b>${fmt(t.likes)}</b><span>лайков</span></div></div>
+      <div class="wkpi"><div class="ico" style="background:var(--mint)">✓</div><div><b>${t.pub}</b><span>опубликовано</span></div></div>
+      <div class="wkpi"><div class="ico" style="background:var(--butter)">⏳</div><div><b>${t.review}</b><span>на согласовании</span></div></div>
+    </div>
+    <div class="seg wseg">${TABS.map(tb=>`<button class="${s.vtab===tb.k?'on':''}" data-a="vtab" data-k="${tb.k}">${tb.t}<span class="cnt">${byTab(tb.k).length}</span></button>`).join('')}</div>
+    <div class="grid">${byTab(s.vtab).map(gcard).join('') || `<div class="empty">Здесь пока пусто ✨</div>`}</div>`;
+}
+
+function renderAll(){ renderApp(); renderWeb(); }
+
+// ── sheets ────────────────────────────────────────────────
+function root(ctx){ return document.querySelector(`[data-ctx="${ctx}"]`); }
+function openSheet(ctx, html, extra=''){
+  const r = root(ctx), ov = r.querySelector('.overlay'), sh = ov.querySelector('.sheet');
+  sh.className = 'sheet ' + extra;
+  sh.innerHTML = `<div class="grab"></div><button class="modal-x" data-a="close">✕</button>${html}`;
+  requestAnimationFrame(()=>ov.classList.add('on'));
+}
+function closeSheet(ctx){ root(ctx).querySelector('.overlay').classList.remove('on'); }
+function toast(ctx, msg){
+  const el = root(ctx).querySelector('.toast');
+  el.textContent = msg; el.classList.add('on');
+  clearTimeout(el._t); el._t = setTimeout(()=>el.classList.remove('on'), 2200);
+}
+
+function linksSheet(v){
+  return `<h3>Ссылки на публикации</h3><p class="sub">Добавь, где уже вышел ролик — остальные можно позже</p>
+    <div class="sheet-vid">${thumb(v)}<div><b>${v.title}</b><span>${v.product} · одобрено ${v.date}</span></div></div>
+    ${PLATS.map(p=>`<div class="field"><span class="pl pl-${p.k}">${p.short}</span><input data-plat="${p.k}" placeholder="${p.name}"><button class="paste" data-a="paste" data-v="${p.sample}">Вставить</button></div>`).join('')}
+    <p class="err"></p>
+    <button class="cta" data-a="save-links" data-id="${v.id}">Сохранить и начать считать статистику</button>`;
+}
+function uploadSheet(){
+  return `<h3>Новый ролик</h3><p class="sub">Менеджер проверит и ответит здесь же</p>
+    <div class="drop" data-a="pick"><span class="big-i">⬆️</span>Нажми, чтобы выбрать видео<br><small>MP4 / MOV до 2 ГБ</small></div>
+    <div class="lbl-s">Товары в ролике</div>
+    <div class="chips" data-group="prod">${PRODUCTS.map((p,i)=>`<button class="chip ${i===1?'on':''}" data-a="chip" data-multi>${p}</button>`).join('')}</div>
+    <div class="lbl-s">Маркетплейс</div>
+    <div class="chips" data-group="mp"><button class="chip on" data-a="chip">Wildberries</button><button class="chip" data-a="chip">Ozon</button></div>
+    <div class="lbl-s">Описание</div>
+    <textarea class="ta" placeholder="Пара слов о ролике">Мой вечерний ритуал с магнием</textarea>
+    <p class="err"></p>
+    <button class="cta" data-a="send-video">Отправить на согласование</button>`;
+}
+
+// ── events ────────────────────────────────────────────────
+document.addEventListener('click', e=>{
+  const sw = e.target.closest('[data-view]');
+  if (sw){
+    document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('on', b===sw));
+    document.getElementById('stage-mobile').classList.toggle('on', sw.dataset.view==='mobile');
+    document.getElementById('stage-web').classList.toggle('on', sw.dataset.view==='web');
+    fit(); return;
+  }
+  const el = e.target.closest('[data-a]'); if (!el) return;
+  if (el.dataset.a==='close' && e.target.closest('[data-stop]') && !e.target.closest('.modal-x')) return;
+  const ctxEl = el.closest('[data-ctx]'); if (!ctxEl) return;
+  const ctx = ctxEl.dataset.ctx, s = state[ctx], a = el.dataset.a, id = +el.dataset.id;
+  const sheet = ctxEl.querySelector('.sheet');
+
+  switch (a){
+    case 'tab': s.tab = el.dataset.k; s.detail = null; s.ref = false; renderApp(); break;
+    case 'ref':
+      if (ctx==='app'){ s.ref = true; s.detail = null; renderApp(); document.getElementById('appBody').scrollTop = 0; }
+      else openSheet('web', refHtml('web'), 'wdetail');
+      break;
+    case 'nav': s.section = el.dataset.k; renderWeb(); break;
+    case 'vtab': s.vtab = el.dataset.k; ctx==='app' ? renderApp() : renderWeb(); break;
+    case 'detail': {
+      const v = videos.find(x=>x.id===id);
+      if (ctx==='app'){ s.detail = id; renderApp(); document.getElementById('appBody').scrollTop = 0; }
+      else openSheet('web', detailHtml(v,'web'), 'wdetail');
+      break;
+    }
+    case 'back': s.detail = null; s.ref = false; renderApp(); break;
+    case 'links': e.stopPropagation(); openSheet(ctx, linksSheet(videos.find(x=>x.id===id))); break;
+    case 'upload': openSheet(ctx, uploadSheet()); break;
+    case 'close': closeSheet(ctx); break;
+    case 'toast': toast(ctx, el.dataset.msg); break;
+    case 'paste': {
+      const f = el.closest('.field'), inp = f.querySelector('input');
+      inp.value = 'https://' + el.dataset.v; f.classList.add('ok'); sheet.querySelector('.err').textContent=''; break;
+    }
+    case 'chip': {
+      const grp = el.parentElement;
+      if (el.hasAttribute('data-multi')) el.classList.toggle('on');
+      else grp.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on', c===el));
+      break;
+    }
+    case 'pick': el.classList.add('done'); el.innerHTML = '<span class="big-i">✅</span>magnesium_evening.mov · 84 МБ · 0:39'; break;
+    case 'save-links': {
+      const v = videos.find(x=>x.id===id), links = {};
+      sheet.querySelectorAll('input[data-plat]').forEach(i=>{ if (i.value.trim()) links[i.dataset.plat] = i.value.trim(); });
+      if (!Object.keys(links).length){ sheet.querySelector('.err').textContent='Добавь хотя бы одну ссылку'; el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); return; }
+      v.status = 'published'; v.links = links; v.fresh = true; v.date = 'сегодня';
+      v.stats = {}; PLATS.forEach(p=>{ const on = !!links[p.k]; const vw = on ? 800+Math.round(Math.random()*1600) : 0; v.stats[p.k] = [vw, Math.round(vw*.07), Math.round(vw*.005)]; });
+      v.trend = [0,0,0,0,0,1,2];
+      closeSheet(ctx); state.app.vtab = state.web.vtab = 'published'; state.app.detail = null; renderAll();
+      toast(ctx, 'Ссылки сохранены — статистика пошла 🎉');
+      break;
+    }
+    case 'send-video': {
+      const drop = sheet.querySelector('.drop');
+      if (!drop.classList.contains('done')){ sheet.querySelector('.err').textContent='Сначала выбери видео'; drop.classList.remove('shake'); void drop.offsetWidth; drop.classList.add('shake'); return; }
+      const prods = [...sheet.querySelectorAll('[data-group="prod"] .chip.on')].map(c=>c.textContent);
+      const mp = sheet.querySelector('[data-group="mp"] .chip.on').textContent;
+      videos.unshift({id:++seq, title:sheet.querySelector('textarea').value || 'Новый ролик', product:prods.join(', ')||'Без товара', mp, status:'review', date:'сегодня', dur:'0:39', g:seq%GR.length, emo:'🎬'});
+      closeSheet(ctx); state.app.vtab = state.web.vtab = 'review'; state.app.tab = 'videos'; state.app.detail = null; renderAll();
+      toast(ctx, 'Ролик отправлен на согласование ✨');
+      break;
+    }
+  }
+});
+
+// fit phone to viewport height
+function fit(){
+  const w = document.getElementById('phoneWrap');
+  const avail = window.innerHeight - 100, sc = Math.min(1, avail/852, (window.innerWidth-24)/393);
+  w.firstElementChild.style.transform = `scale(${sc})`; w.style.height = (852*sc)+'px'; w.style.width = (393*sc)+'px';
+}
+window.addEventListener('resize', fit);
+renderAll(); fit();
+</script>
+</body>
+</html>
